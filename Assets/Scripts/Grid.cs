@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class Grid : MonoBehaviour {
     public int width = 7;
@@ -11,12 +12,22 @@ public class Grid : MonoBehaviour {
 
     private Mesh mesh;
 
+    public float seatsOffset = 10.0f;
+
+    private string playerSeatTag = "Player seat";
+
     void Awake()
     {
         Generate();
     }
 
     private void Generate()
+    {
+        GenerateMesh();
+        GenerateSeats();
+    }
+
+    private void GenerateMesh()
     {
         GetComponent<MeshFilter>().mesh = mesh = new Mesh();
         mesh.name = "grid";
@@ -26,14 +37,17 @@ public class Grid : MonoBehaviour {
         Vector3[] vertices = new Vector3[cellCount * 8];
         int[] triangles = new int[(cellCount + 2) * 8 * 3];
 
+        float topLeftX = -(width / 2.0f) * cellSize;
+        float topLeftY = -(length / 2.0f) * cellSize;
+
         int t = 0;
         int index = 0;
         for (int xi = 0; xi < width; ++xi)
         {
             for (int yi = 0; yi < length; ++yi)
             {
-                float x = cellSize * xi;
-                float y = cellSize * yi;
+                float x = topLeftX + cellSize * xi;
+                float y = topLeftY + cellSize * yi;
 
                 vertices[index + 0] = new Vector3(x, 0, y);
                 vertices[index + 1] = new Vector3(x + cellSize, 0, y);
@@ -69,5 +83,27 @@ public class Grid : MonoBehaviour {
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+    }
+
+    private void GenerateSeats()
+    {
+        GameObject[] seats = GameObject.FindGameObjectsWithTag(playerSeatTag);
+        if (seats.Length == 2)
+        {
+            return;
+        }
+
+        foreach (GameObject seat in seats) {
+            Destroy(seat);
+        }
+
+        for (int i = 0; i < 2; ++i)
+        {
+            GameObject seat = new GameObject("seat_" + (i + 1));
+
+            seat.tag = playerSeatTag;
+            seat.transform.parent = transform;
+            seat.transform.position = new Vector3(0.0f, 0.0f, (cellSize * (length / 2.0f) + seatsOffset) * (i * 2 - 1));
+        }
     }
 }
