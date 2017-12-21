@@ -9,25 +9,39 @@ ModelImporter:
     100002: Cube.001
     100004: Cylinder
     100006: //RootNode
+    100008: mill
+    100010: propeller
     400000: Cube
     400002: Cube.001
     400004: Cylinder
     400006: //RootNode
+    400008: mill
+    400010: propeller
     2300000: Cube
     2300002: Cube.001
     2300004: Cylinder
+    2300006: mill
+    2300008: propeller
     3300000: Cube
     3300002: Cube.001
     3300004: Cylinder
+    3300006: mill
+    3300008: propeller
     4300000: Cylinder
     4300002: Cube.001
     4300004: Cube
+    4300006: propeller
+    4300008: mill
+    9500000: //RootNode
+    11100000: //RootNode
+    11100002: mill
+    11100004: propeller
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
-    legacyGenerateAnimations: 4
+    legacyGenerateAnimations: 0
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
@@ -88,7 +102,7 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0
