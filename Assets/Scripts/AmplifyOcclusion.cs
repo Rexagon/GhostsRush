@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+[AddComponentMenu( "" )]
 public class AmplifyOcclusion : MonoBehaviour
 {
 	public enum ApplicationMethod
@@ -92,7 +93,7 @@ public class AmplifyOcclusion : MonoBehaviour
 	private Mesh m_blitMesh = null;
 	private TargetDesc m_target = new TargetDesc();
 	private Dictionary<CameraEvent,CommandBuffer> m_registeredCommandBuffers = new Dictionary<CameraEvent,CommandBuffer>();
-    
+
 	private static class ShaderPass
 	{
 		public const int FullDepth = 0;
@@ -333,12 +334,12 @@ public class AmplifyOcclusion : MonoBehaviour
 	void CheckMaterial()
 	{
 		if ( m_occlusionMat == null )
-			m_occlusionMat = new Material( Shader.Find( "Hidden/Amplify Occlusion/Occlusion" ) ) { hideFlags = HideFlags.DontSave };
+			m_occlusionMat = new Material( Shader.Find("Custom/AO/Occlusion") ) { hideFlags = HideFlags.DontSave };
 		if ( m_blurMat == null )
-			m_blurMat = new Material( Shader.Find( "Hidden/Amplify Occlusion/Blur" ) ) { hideFlags = HideFlags.DontSave };
+			m_blurMat = new Material( Shader.Find("Custom/AO/Blur") ) { hideFlags = HideFlags.DontSave };
 		if ( m_copyMat == null )
-			m_copyMat = new Material( Shader.Find( "Hidden/Amplify Occlusion/Copy" ) ) { hideFlags = HideFlags.DontSave };
-	}
+			m_copyMat = new Material( Shader.Find("Custom/AO/Copy") ) { hideFlags = HideFlags.DontSave };
+    }
 
 	void CheckRandomData()
 	{
@@ -748,7 +749,7 @@ public class AmplifyOcclusion : MonoBehaviour
 		}
 		else
 		{
-			bool logTarget = ( !m_camera.hdr && gbufferSource );
+			bool logTarget = ( !m_camera.allowHDR && gbufferSource );
 			stage = ( ApplyMethod == ApplicationMethod.Deferred ) ? CameraEvent.BeforeReflections : stage;
 
 			cb = CommandBuffer_AllocateRegister( stage );
@@ -783,14 +784,6 @@ public class AmplifyOcclusion : MonoBehaviour
 			UpdateParams();
 		}
 	}
-
-#if TRIAL
-	void OnGUI()
-	{
-		if ( watermark != null )
-			GUI.DrawTexture( new Rect( Screen.width - watermark.width - 15, Screen.height - watermark.height - 12, watermark.width, watermark.height ), watermark );
-	}
-#endif
 }
 
 public class RandomTable

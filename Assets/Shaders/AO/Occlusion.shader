@@ -1,7 +1,4 @@
-// Amplify Occlusion - Robust Ambient Occlusion for Unity Pro
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-
-Shader "Hidden/Amplify Occlusion/Occlusion" {
+Shader "Custom/AO/Occlusion" {
 	Properties { }
 	CGINCLUDE
 		#pragma vertex vert
