@@ -1,4 +1,4 @@
-Shader "Custom/AO/Occlusion" {
+Shader "Hidden/AO/Occlusion" {
 	Properties { }
 	CGINCLUDE
 		#pragma vertex vert

@@ -1,4 +1,4 @@
-Shader "Custom/AO/Blur"
+Shader "Hidden/AO/Blur"
 {
 	Properties { }
 	CGINCLUDE

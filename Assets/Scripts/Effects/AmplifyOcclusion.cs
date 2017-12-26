@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-[AddComponentMenu( "" )]
+[AddComponentMenu("")]
 public class AmplifyOcclusion : MonoBehaviour
 {
 	public enum ApplicationMethod
@@ -334,11 +334,11 @@ public class AmplifyOcclusion : MonoBehaviour
 	void CheckMaterial()
 	{
 		if ( m_occlusionMat == null )
-			m_occlusionMat = new Material( Shader.Find("Custom/AO/Occlusion") ) { hideFlags = HideFlags.DontSave };
+			m_occlusionMat = new Material( Shader.Find("Hidden/AO/Occlusion") ) { hideFlags = HideFlags.DontSave };
 		if ( m_blurMat == null )
-			m_blurMat = new Material( Shader.Find("Custom/AO/Blur") ) { hideFlags = HideFlags.DontSave };
+			m_blurMat = new Material( Shader.Find("Hidden/AO/Blur") ) { hideFlags = HideFlags.DontSave };
 		if ( m_copyMat == null )
-			m_copyMat = new Material( Shader.Find("Custom/AO/Copy") ) { hideFlags = HideFlags.DontSave };
+			m_copyMat = new Material( Shader.Find("Hidden/AO/Copy") ) { hideFlags = HideFlags.DontSave };
     }
 
 	void CheckRandomData()

@@ -1,4 +1,4 @@
-Shader "Custom/AO/Copy" {
+Shader "Hidden/AO/Copy" {
 	Properties { }
 	CGINCLUDE
 		#pragma vertex vert
