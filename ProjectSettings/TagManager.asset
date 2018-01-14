@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - FxTemporaire
-  - projectile
+  - Building
+  - Pawn
+  - Field Cell
+  - TeleportIgnore
   layers:
   - Default
   - TransparentFX
@@ -15,8 +17,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Pawn
+  - Field Cell
   - 
   - 
   - 
