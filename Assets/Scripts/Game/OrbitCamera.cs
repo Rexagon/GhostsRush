@@ -8,6 +8,7 @@ public class OrbitCamera : MonoBehaviour
     public Vector3 origin = new Vector3();
     public float distance = 30.0f;
     public float movementSpeed = 50.0f;
+    public float movementLimit = 150.0f;
     public Vector2 rotationSpeed = new Vector2(250.0f, 120.0f);
     public Vector2 rotationLimit = new Vector2(1.0f, 80.0f);
     public Vector2 zoomLimit = new Vector2(10.0f, 100.0f);
@@ -43,6 +44,7 @@ public class OrbitCamera : MonoBehaviour
             velocity.Normalize();
 
             origin += velocity * movementSpeed * Time.deltaTime;
+            origin = Vector3.ClampMagnitude(origin, movementLimit);
 
             if (scrollAxis != 0)
             {

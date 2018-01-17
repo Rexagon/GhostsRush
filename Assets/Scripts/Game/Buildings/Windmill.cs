@@ -7,7 +7,7 @@ public class Windmill : Building {
     public int mealPerTick;
 
     private float currentCooldown = 0;
-    	
+    
 	void Update ()
     {
         if (currentCooldown >= cooldown)
@@ -26,7 +26,6 @@ public class Windmill : Building {
         if (owner != null)
         {
             owner.AddResource(ResourceType.Meal, mealPerTick);
-            Debug.Log(mealPerTick);
         }
     }
 }

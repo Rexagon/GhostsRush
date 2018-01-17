@@ -17,4 +17,6 @@ public class MouseUIController : UIController
     {
         manaCounterText.text = amount.ToString();
     }
+
+
 }

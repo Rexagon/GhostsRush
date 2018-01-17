@@ -23,10 +23,7 @@ public class Player : MonoBehaviour
 
     private InputController inputController;
     private UIController uiController;
-
-    public GameUnit currentUnit;
-
-
+    
     void Awake()
     {
         resources = new Dictionary<ResourceType, int>();
@@ -57,16 +54,21 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (currentUnit != null)
+        Building selectedBuilding = uiController.GetSelectedBuilding();
+        if (selectedBuilding != null)
         {
-            FieldCell cell = inputController.GetSelectedCell();
-            if (cell != null)
+            Building building = selectedBuilding.GetComponent<Building>();
+            
+            FieldCell cell;
+            if (building.cost <= GetResourceAmount(ResourceType.Meal) &&
+                (cell = inputController.GetSelectedCell()) != null)
             {
                 cell.Highlight();
 
                 if (inputController.AcceptButtonPressed())
                 {
-                    cell.PlaceBuilding(currentUnit.GetComponent<Building>(), this);
+                    AddResource(ResourceType.Meal, -building.cost);
+                    cell.PlaceBuilding(building, this);
                 }
             }
         }

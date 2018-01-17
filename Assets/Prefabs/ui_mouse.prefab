@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 222623977662088332}
   - component: {fileID: 114937255428711056}
   - component: {fileID: 114620546742607312}
+  - component: {fileID: 114980613363837834}
   m_Layer: 5
   m_Name: button_baracks
   m_TagString: Untagged
@@ -108,6 +109,7 @@ GameObject:
   - component: {fileID: 222859582587358888}
   - component: {fileID: 114792740587155962}
   - component: {fileID: 114163163588458732}
+  - component: {fileID: 114598834843445612}
   m_Layer: 5
   m_Name: button_windmill
   m_TagString: Untagged
@@ -195,6 +197,7 @@ GameObject:
   - component: {fileID: 222839456791887720}
   - component: {fileID: 114580141942351506}
   - component: {fileID: 114016523218392186}
+  - component: {fileID: 114178752106637404}
   m_Layer: 5
   m_Name: button_tower
   m_TagString: Untagged
@@ -328,6 +331,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114178752106637404
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840237882123222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8a274254f17b9449ceddcfba247202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  building: {fileID: 114011067620845632, guid: 2e389ce097a99d240b42ef07dc5c8b78, type: 2}
 --- !u!114 &114222864371436844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -425,6 +440,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114598834843445612
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1622315368101086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8a274254f17b9449ceddcfba247202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  building: {fileID: 114892802403583850, guid: 8d6e140a744261f4390a952f7d0522ee, type: 2}
 --- !u!114 &114620546742607312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -700,6 +727,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114980613363837834
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1478506617338210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8a274254f17b9449ceddcfba247202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  building: {fileID: 114572171428015560, guid: 3489ef59e4c64db4d9f04cd6020a9486, type: 2}
 --- !u!222 &222137095634960874
 CanvasRenderer:
   m_ObjectHideFlags: 1

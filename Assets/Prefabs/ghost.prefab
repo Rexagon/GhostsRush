@@ -968,6 +968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 0
+  health: 0
   damage: 0
   cooldown: 0
   speed: 0
@@ -1044,7 +1045,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2122756676
+  randomSeed: -385692359
   InitialModule:
     serializedVersion: 3
     enabled: 1
