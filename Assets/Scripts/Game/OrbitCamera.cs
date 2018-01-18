@@ -5,7 +5,7 @@ using System.Collections;
 [RequireComponent(typeof(Camera), typeof(AmplifyOcclusion), typeof(FXAA))]
 public class OrbitCamera : MonoBehaviour
 {
-    public Vector3 origin = new Vector3();
+    public Vector3 origin { get; set; }
     public float distance = 30.0f;
     public float movementSpeed = 50.0f;
     public float movementLimit = 150.0f;
@@ -20,6 +20,16 @@ public class OrbitCamera : MonoBehaviour
 
     void Awake()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 100.0f, 1 << 10))
+        {
+            origin = hit.point;
+        }
+        else
+        {
+            origin = new Vector3();
+        }
+
         Vector3 cameraAngles = transform.eulerAngles;
         angles.x = cameraAngles.y;
         angles.y = cameraAngles.x;
