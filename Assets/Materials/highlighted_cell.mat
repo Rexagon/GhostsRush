@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: HighlightCell
+  m_Name: highlighted_cell
   m_Shader: {fileID: 4800000, guid: 10d983de2640d1f4b860017e86587dd0, type: 3}
   m_ShaderKeywords: RECEIVE_SHADOWS _ALPHAPREMULTIPLY_ON _EMISSION
   m_LightmapFlags: 1

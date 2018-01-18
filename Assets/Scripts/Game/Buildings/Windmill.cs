@@ -6,6 +6,8 @@ public class Windmill : Building {
     public float cooldown;
     public int mealPerTick;
 
+    public ParticleSystem mealParticlesSystem;
+
     private float currentCooldown = 0;
     
 	void Update ()
@@ -26,6 +28,11 @@ public class Windmill : Building {
         if (owner != null)
         {
             owner.AddResource(ResourceType.Meal, mealPerTick);
+
+            if (mealParticlesSystem != null)
+            {
+                mealParticlesSystem.Play();
+            }
         }
     }
 }
