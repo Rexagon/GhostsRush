@@ -88,8 +88,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4750472197858448}
-  - component: {fileID: 114892802403583850}
+  - component: {fileID: 114680849205748166}
   - component: {fileID: 65995088053938328}
+  - component: {fileID: 114878914650525188}
   m_Layer: 0
   m_Name: windmill
   m_TagString: Building
@@ -277,7 +278,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114892802403583850
+--- !u!114 &114680849205748166
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -290,9 +291,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 50
   health: 70
+  type: windmill
   cooldown: 10
   mealPerTick: 25
   mealParticlesSystem: {fileID: 198236506251482368}
+--- !u!114 &114878914650525188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1988781879864952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 141
+    i1: 110
+    i2: 20
+    i3: 10
+    i4: 116
+    i5: 66
+    i6: 97
+    i7: 244
+    i8: 57
+    i9: 10
+    i10: 149
+    i11: 47
+    i12: 125
+    i13: 5
+    i14: 34
+    i15: 238
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!198 &198236506251482368
 ParticleSystem:
   m_ObjectHideFlags: 1

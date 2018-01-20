@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public abstract class GameUnit : MonoBehaviour
+[RequireComponent(typeof(NetworkIdentity))]
+public abstract class GameUnit : NetworkBehaviour
 {
     private Player player;
 
-    public int cost;
-    public int health;
+    [SyncVar] public int cost;
+    [SyncVar] public int health;
 
     public virtual void ApplyDamage(int damage)
     {

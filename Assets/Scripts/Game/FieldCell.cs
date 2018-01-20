@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(BoxCollider))]
-public class FieldCell : MonoBehaviour
+[RequireComponent(typeof(NetworkIdentity))]
+public class FieldCell : NetworkBehaviour
 {
+    [HideInInspector]
     public Vector2Int position;
 
     private bool highlighted = false;
 
     private MeshRenderer meshRenderer;
 
-    void Awake()
+    void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
 
@@ -30,8 +33,10 @@ public class FieldCell : MonoBehaviour
 
         Building building = Instantiate(buildingPrefab);
         building.SetOwner(player);
-        building.transform.parent = transform;
-        building.transform.position = transform.position;
+        NetworkServer.Spawn(building.gameObject);
+        RpcAddBuilding(building.gameObject, player.gameObject);
+
+        player.resources.AddMeal(-building.cost);
     }
 
     public void Highlight()
@@ -48,5 +53,12 @@ public class FieldCell : MonoBehaviour
     {
         meshRenderer.enabled = highlighted;
         highlighted = false;
+    }
+
+    [ClientRpc]
+    private void RpcAddBuilding(GameObject building, GameObject owner)
+    {
+        building.transform.parent = transform;
+        building.transform.position = transform.position;
     }
 }

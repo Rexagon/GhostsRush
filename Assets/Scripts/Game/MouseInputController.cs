@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class MouseInputController : InputController
 {
-    private new Camera camera;
-
-    private void Awake()
-    {
-        camera = GetComponent<Camera>();
-    }
-
     public override Transform GetHeadTransform()
     {
         return transform;
@@ -18,10 +11,14 @@ public class MouseInputController : InputController
 
     public override FieldCell GetSelectedCell()
     {
-        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return null;
+        if (mainCamera == null ||
+            UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        {
+            return null;
+        }
 
         RaycastHit hit;
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, 200.0f, 1 << 9))
         {

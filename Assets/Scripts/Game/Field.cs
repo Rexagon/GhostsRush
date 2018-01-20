@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-[ExecuteInEditMode]
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class Field : MonoBehaviour
 {
@@ -24,7 +24,7 @@ public class Field : MonoBehaviour
         GenerateMesh();
     }
 
-    void Awake()
+    void Start()
     {
         GenerateCells();
     }

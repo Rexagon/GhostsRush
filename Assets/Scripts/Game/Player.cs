@@ -1,51 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public enum ResourceType
+public class Player : NetworkBehaviour
 {
-    Meal,
-    Mana
-}
-
-public class Player : MonoBehaviour
-{
-    private Dictionary<ResourceType, int> resources, resourceLimits;
+    [HideInInspector]
+    public PlayerResources resources;
 
     [HideInInspector]
     public List<GameUnit> units;
     
-    public int startMealLimit = 0;
-    public int startManaLimit = 30;
-    
-    public int startMeal = 0;
-    public int startMana = 0;
-
     private InputController inputController;
     private UIController uiController;
-    
-    void Awake()
-    {
-        resources = new Dictionary<ResourceType, int>();
-        resources.Add(ResourceType.Meal, startMeal);
-        resources.Add(ResourceType.Mana, startMana);
-
-        resourceLimits = new Dictionary<ResourceType, int>();
-        resourceLimits.Add(ResourceType.Meal, startMealLimit);
-        resourceLimits.Add(ResourceType.Mana, startManaLimit);
-
-        inputController = GetComponent<InputController>();
-        if (inputController == null)
-        {
-            Debug.LogError("There is no Input Controller assigned to player");
-        }
-
-        uiController = GetComponent<UIController>();
-        if (uiController == null)
-        {
-            Debug.LogError("There is no UI Controller assigned to player");
-        }
-    }
 
     void Start()
     {
@@ -54,21 +21,20 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (!isLocalPlayer) return;
+
         Building selectedBuilding = uiController.GetSelectedBuilding();
         if (selectedBuilding != null)
-        {
-            Building building = selectedBuilding.GetComponent<Building>();
-            
+        {            
             FieldCell cell;
-            if (building.cost <= GetResourceAmount(ResourceType.Meal) &&
+            if (selectedBuilding.cost <= resources.GetMeal() &&
                 (cell = inputController.GetSelectedCell()) != null)
             {
                 cell.Highlight();
 
                 if (inputController.AcceptButtonPressed())
                 {
-                    AddResource(ResourceType.Meal, -building.cost);
-                    cell.PlaceBuilding(building, this);
+                    CmdPlaceBuilding(cell.gameObject, selectedBuilding.GetComponent<NetworkIdentity>().assetId);
                 }
             }
         }
@@ -76,19 +42,58 @@ public class Player : MonoBehaviour
         UpdateUI();
     }
 
-    public void AddResource(ResourceType resourceType, int value)
+    public override void OnStartLocalPlayer()
     {
-        resources[resourceType] = Mathf.Clamp(resources[resourceType] + value, 0, resourceLimits[resourceType]);
-    }
+        base.OnStartLocalPlayer();
 
-    public int GetResourceAmount(ResourceType resourceType)
-    {
-        return resources[resourceType];
-    }
+        Camera playerCamera = GetComponent<Camera>();
+        playerCamera.enabled = true;
 
+        GameObject mainObject = GameObject.FindWithTag("Main");
+        if (mainObject == null)
+        {
+            Debug.LogError("There is no Main object on the scene");
+        }
+
+        inputController = mainObject.GetComponent<InputController>();
+        if (inputController == null)
+        {
+            Debug.LogError("There is no Input Controller assigned to player");
+        }
+        else
+        {
+            inputController.SetCamera(playerCamera);
+        }
+
+        uiController = mainObject.GetComponent<UIController>();
+        if (uiController == null)
+        {
+            Debug.LogError("There is no UI Controller assigned to player");
+        }
+    }
+    
     private void UpdateUI()
     {
-        uiController.SetMealAmount(resources[ResourceType.Meal]);
-        uiController.SetManaAmount(resources[ResourceType.Mana]);
+        if (!isLocalPlayer || resources == null) return;
+
+        uiController.SetMealAmount(resources.GetMeal());
+        uiController.SetManaAmount(resources.GetMana());
+    }
+
+    [Command]
+    private void CmdPlaceBuilding(GameObject cellObject, NetworkHash128 buildingId)
+    {
+        FieldCell cell = cellObject.GetComponent<FieldCell>();
+        Building building = ClientScene.prefabs[buildingId].GetComponent<Building>();
+
+        if (cell == null || building == null) return;
+
+        cell.PlaceBuilding(building, this);
+    }
+
+    [ClientRpc]
+    public void RpcSetResources(GameObject resources)
+    {
+        this.resources = resources.GetComponent<PlayerResources>();
     }
 }

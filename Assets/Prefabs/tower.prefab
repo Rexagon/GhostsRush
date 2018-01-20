@@ -19,8 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4255067278082538}
-  - component: {fileID: 114011067620845632}
+  - component: {fileID: 114377649036044836}
   - component: {fileID: 65362948334830396}
+  - component: {fileID: 114193383299017478}
   m_Layer: 0
   m_Name: tower
   m_TagString: Building
@@ -156,7 +157,39 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.6531067, y: 5.564903, z: 3.5725594}
   m_Center: {x: 0.100829124, y: 2.7824514, z: 0.05575943}
---- !u!114 &114011067620845632
+--- !u!114 &114193383299017478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1126007631952192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 46
+    i1: 56
+    i2: 156
+    i3: 224
+    i4: 151
+    i5: 169
+    i6: 157
+    i7: 36
+    i8: 11
+    i9: 66
+    i10: 239
+    i11: 7
+    i12: 220
+    i13: 92
+    i14: 139
+    i15: 120
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114377649036044836
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -169,6 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 50
   health: 40
+  type: tower
 --- !u!198 &198671977577422716
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.Networking;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Camera), typeof(AmplifyOcclusion), typeof(FXAA))]
-public class OrbitCamera : MonoBehaviour
+public class OrbitCamera : NetworkBehaviour
 {
     public Vector3 origin { get; set; }
     public float distance = 30.0f;
@@ -39,6 +40,8 @@ public class OrbitCamera : MonoBehaviour
    
     void LateUpdate()
     {
+        if (!isLocalPlayer) return;
+
         float scrollAxis = Input.GetAxis("Mouse ScrollWheel");
         float verticalAxis = Input.GetAxis("Vertical");
         float horizontalAxis = Input.GetAxis("Horizontal");

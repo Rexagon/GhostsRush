@@ -27,7 +27,7 @@ public class Windmill : Building {
 
         if (owner != null)
         {
-            owner.AddResource(ResourceType.Meal, mealPerTick);
+            owner.resources.AddMeal(mealPerTick);
 
             if (mealParticlesSystem != null)
             {

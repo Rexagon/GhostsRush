@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 65687121599622750}
   - component: {fileID: 23636277003381090}
   - component: {fileID: 33043640934151642}
+  - component: {fileID: 114724478787124986}
   m_Layer: 9
   m_Name: field_cell
   m_TagString: Field Cell
@@ -108,3 +109,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}
+--- !u!114 &114724478787124986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1502653781925242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 155
+    i1: 86
+    i2: 151
+    i3: 75
+    i4: 94
+    i5: 123
+    i6: 126
+    i7: 20
+    i8: 58
+    i9: 147
+    i10: 140
+    i11: 171
+    i12: 221
+    i13: 198
+    i14: 217
+    i15: 250
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

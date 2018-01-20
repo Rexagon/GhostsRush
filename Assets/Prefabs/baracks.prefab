@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114572171428015560}
   - component: {fileID: 65438110557983910}
   - component: {fileID: 65056502064967684}
+  - component: {fileID: 114856009913276930}
   m_Layer: 0
   m_Name: baracks
   m_TagString: Building
@@ -429,6 +430,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 100
   health: 70
+  type: baracks
+--- !u!114 &114856009913276930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1075226265811630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 52
+    i1: 137
+    i2: 239
+    i3: 89
+    i4: 228
+    i5: 198
+    i6: 77
+    i7: 180
+    i8: 217
+    i9: 240
+    i10: 76
+    i11: 214
+    i12: 2
+    i13: 10
+    i14: 148
+    i15: 134
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!198 &198136168037696562
 ParticleSystem:
   m_ObjectHideFlags: 1
