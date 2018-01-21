@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Archer : Pawn {
+public class Archer : Pawn
+{
     float range;
 }

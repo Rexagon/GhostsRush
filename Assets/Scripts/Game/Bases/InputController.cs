@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UIController : MonoBehaviour
+public abstract class InputController : MonoBehaviour
 {
-    public BuildingSelectionButton[] buildingSelectionButtons;
+    public Camera MainCamera { get; set; }
 
     protected Building selectedBuilding;
 
-    void Awake()
-    {
-        foreach (BuildingSelectionButton selectionButton in buildingSelectionButtons)
-        {
-            if (selectionButton != null)
-            {
-                selectionButton.uiController = this;
-            }
-        }
-    }
+
+    // General input
+
+    public abstract FieldCell GetSelectedCell();
+
+    public abstract bool AcceptButtonPressed();
+
+    public abstract bool RejectButtonPressed();
+
+
+    // UI input
 
     public abstract void SetMealAmount(int amount);
 

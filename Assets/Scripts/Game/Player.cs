@@ -12,7 +12,6 @@ public class Player : NetworkBehaviour
     public List<GameUnit> units;
     
     private InputController inputController;
-    private UIController uiController;
 
     void Start()
     {
@@ -23,20 +22,27 @@ public class Player : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
 
-        Building selectedBuilding = uiController.GetSelectedBuilding();
-        if (selectedBuilding != null)
+        // Placing buildings logic
+        Building building = inputController.GetSelectedBuilding();
+        if (building != null)
         {            
             FieldCell cell;
-            if (selectedBuilding.cost <= resources.GetMeal() &&
+            if (building.cost <= resources.GetMeal() &&
                 (cell = inputController.GetSelectedCell()) != null)
             {
                 cell.Highlight();
 
                 if (inputController.AcceptButtonPressed())
                 {
-                    CmdPlaceBuilding(cell.gameObject, selectedBuilding.GetComponent<NetworkIdentity>().assetId);
+                    CmdPlaceBuilding(cell.gameObject, building.GetComponent<NetworkIdentity>().assetId);
                 }
             }
+        }
+
+        // Deselecting buildings logic
+        if (inputController.RejectButtonPressed())
+        {
+            inputController.SelectBuilding(null);
         }
 
         UpdateUI();
@@ -62,13 +68,7 @@ public class Player : NetworkBehaviour
         }
         else
         {
-            inputController.SetCamera(playerCamera);
-        }
-
-        uiController = mainObject.GetComponent<UIController>();
-        if (uiController == null)
-        {
-            Debug.LogError("There is no UI Controller assigned to player");
+            inputController.MainCamera = playerCamera;
         }
     }
     
@@ -76,8 +76,8 @@ public class Player : NetworkBehaviour
     {
         if (!isLocalPlayer || resources == null) return;
 
-        uiController.SetMealAmount(resources.GetMeal());
-        uiController.SetManaAmount(resources.GetMana());
+        inputController.SetMealAmount(resources.GetMeal());
+        inputController.SetManaAmount(resources.GetMana());
     }
 
     [Command]

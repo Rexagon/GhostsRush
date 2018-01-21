@@ -27,8 +27,6 @@ public class CustomNetworkManager : NetworkManager
         Player player = Instantiate(playerPrefabMouse, playerPosition.position, playerPosition.rotation);
         NetworkServer.AddPlayerForConnection(conn, player.gameObject, playerControllerId);
 
-        Debug.Log(resourcesPrefab == null);
-
         PlayerResources resources = Instantiate(resourcesPrefab);
         NetworkServer.Spawn(resources.gameObject);
         player.RpcSetResources(resources.gameObject);

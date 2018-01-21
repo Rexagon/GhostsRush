@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class NetworkMovement : NetworkBehaviour
+public class SmoothNetworkTransform : NetworkBehaviour
 {
     [Header("Setup")]
     [Range(0, 10)] public int sendRate = 2;

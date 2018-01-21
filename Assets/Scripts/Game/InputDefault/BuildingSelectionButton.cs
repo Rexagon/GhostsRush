@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class BuildingSelectionButton : MonoBehaviour
 {
+    public Text costLabel;
     public Building building;
 
-    public UIController uiController { get; set; }
+    [HideInInspector]
+    public InputController inputController;
     
     private Button button;
 
@@ -24,12 +26,17 @@ public class BuildingSelectionButton : MonoBehaviour
         selectedColors.normalColor = normalColors.pressedColor;
         selectedColors.highlightedColor = normalColors.pressedColor;
 
-        button.onClick.AddListener(SetSelected);
+        button.onClick.AddListener(Select);
+
+        if (building != null)
+        {
+            costLabel.text = building.cost.ToString();
+        }
     }
 
-    private void SetSelected()
+    public void Select()
     {
-        if (uiController == null)
+        if (inputController == null)
         {
             return;
         }
@@ -41,6 +48,11 @@ public class BuildingSelectionButton : MonoBehaviour
         }
 
         button.colors = selectedColors;
-        uiController.SelectBuilding(building);
+        inputController.SelectBuilding(building);
+    }
+
+    public void Deselect()
+    {
+        button.colors = normalColors;
     }
 }
