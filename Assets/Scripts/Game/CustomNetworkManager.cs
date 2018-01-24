@@ -5,15 +5,24 @@ using UnityEngine.Networking;
 
 public class CustomNetworkManager : NetworkManager
 {
-    public Transform[] playerPositions = new Transform[2];
+    public SpawnPoint[] spawnPoints;
     private bool[] occupiedSeats = new bool[2];
 
     public PlayerResources resourcesPrefab;
 
-    public Player playerPrefabMouse;
+    public Player playerPrefabDefault;
     public Player playerPrefabVR;
-    
-    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
+
+    public void Awake()
+    {
+        spawnPoints = FindObjectsOfType<SpawnPoint>();
+        if (spawnPoints.Length < 2)
+        {
+            Debug.LogError("There is not enough spawn points!");
+        }
+    }
+
+    public override void OnServerAddPlayer(NetworkConnection connection, short playerControllerId)
     {
         int seat;
 
@@ -21,14 +30,19 @@ public class CustomNetworkManager : NetworkManager
         else if (occupiedSeats[1]) seat = 0;
         else seat = Random.Range(0, 2);
 
-        Transform playerPosition = playerPositions[seat];
+        SpawnPoint spawnPoint = spawnPoints[seat];
+        Transform playerPosition = spawnPoint.transform;
         occupiedSeats[seat] = true;
 
-        Player player = Instantiate(playerPrefabMouse, playerPosition.position, playerPosition.rotation);
-        NetworkServer.AddPlayerForConnection(conn, player.gameObject, playerControllerId);
+        Player player = Instantiate(playerPrefabDefault, playerPosition.position, playerPosition.rotation);
+        NetworkServer.AddPlayerForConnection(connection, player.gameObject, playerControllerId);
 
         PlayerResources resources = Instantiate(resourcesPrefab);
         NetworkServer.Spawn(resources.gameObject);
+
         player.RpcSetResources(resources.gameObject);
+        player.colorId = spawnPoint.colorId;
+
+        spawnPoint.castle.RpcSetOwner(player.gameObject);
     }
 }

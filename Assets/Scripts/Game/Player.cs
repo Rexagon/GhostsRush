@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+public enum ColorId : byte
+{
+    First,
+    Second
+}
+
 public class Player : NetworkBehaviour
 {
     [HideInInspector]
@@ -10,7 +16,10 @@ public class Player : NetworkBehaviour
 
     [HideInInspector]
     public List<GameUnit> units;
-    
+
+    [SyncVar]
+    public ColorId colorId;
+
     private InputController inputController;
 
     void Start()

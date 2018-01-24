@@ -9,6 +9,7 @@ TagManager:
   - Field Cell
   - TeleportIgnore
   - Main
+  - Spawn Point
   layers:
   - Default
   - TransparentFX

@@ -972,7 +972,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
@@ -1116,8 +1116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81248fad97f4a524383d0c5fdff799c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourcesPrefab: {fileID: 114208577279289312, guid: 63f40ba8bb318854ea12c93b3c31a1cf,
-    type: 2}
   resources: {fileID: 0}
   units: []
 --- !u!114 &114964252322666220

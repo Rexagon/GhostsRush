@@ -32,9 +32,9 @@ public class FieldCell : NetworkBehaviour
         }
 
         Building building = Instantiate(buildingPrefab);
-        building.SetOwner(player);
         NetworkServer.Spawn(building.gameObject);
         RpcAddBuilding(building.gameObject, player.gameObject);
+        building.RpcSetOwner(player.gameObject);
 
         player.resources.AddMeal(-building.cost);
     }

@@ -8,8 +8,15 @@ public abstract class GameUnit : NetworkBehaviour
 {
     private Player player;
 
+    public ColorId colorId;
+    
     [SyncVar] public int cost;
     [SyncVar] public int health;
+
+    protected virtual void Awake()
+    {
+        SetColor(colorId);
+    }
 
     public virtual void ApplyDamage(int damage)
     {
@@ -37,11 +44,41 @@ public abstract class GameUnit : NetworkBehaviour
         return player;
     }
 
-    public void SetOwner(Player player)
+    [ClientRpc]
+    public void RpcSetOwner(GameObject playerObject)
     {
+        Player player = playerObject.GetComponent<Player>();
+
+        if (player == null) return;
+
         DetachFromPlayer();
         this.player = player;
         AttachToPlayer();
+        SetColor(player.colorId);
+    }
+
+    public virtual void SetColor(ColorId color)
+    {
+        colorId = color;
+
+        MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+
+        propertyBlock.SetFloat("_ColorId", color == ColorId.First ? 0 : 1);
+
+        ChangeMaterialColor(transform, propertyBlock);
+        foreach (Transform child in transform)
+        {
+            ChangeMaterialColor(child, propertyBlock);
+        }
+    }
+
+    private void ChangeMaterialColor(Transform transform, MaterialPropertyBlock propertyBlock)
+    {
+        Renderer renderer = transform.gameObject.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.SetPropertyBlock(propertyBlock);
+        }
     }
 
     private void AttachToPlayer()

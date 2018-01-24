@@ -1,12 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class GameController : MonoBehaviour
+[RequireComponent(typeof(NetworkIdentity))]
+public class GameController : NetworkBehaviour
 {
     private VictoryCondition[] victoryConditions;
+    private bool isGameRunning = false;
 
-    void Awake()
+
+    void Update()
+    {
+        if (isServer && isGameRunning && victoryConditions != null)
+        {
+            foreach (VictoryCondition victoryCondition in victoryConditions)
+            {
+                if (victoryCondition.GameFinished())
+                {
+                    Debug.Log("GAME FINISHED: " + victoryCondition.GetDescription());
+
+                    isGameRunning = false;
+                    return;
+                }
+            }
+        }
+    }
+
+    public void StartGame()
     {
         victoryConditions = FindObjectsOfType<VictoryCondition>();
         if (victoryConditions != null)
@@ -16,20 +37,6 @@ public class GameController : MonoBehaviour
             foreach (VictoryCondition victoryCondition in victoryConditions)
             {
                 victoryCondition.players = players;
-            }
-        }
-    }
-
-    void Update()
-    {
-        if (victoryConditions != null)
-        {
-            foreach (VictoryCondition victoryCondition in victoryConditions)
-            {
-                if (victoryCondition.GameFinished())
-                {
-                    Debug.Log("GAME FINISHED: " + victoryCondition.GetDescription());
-                }
             }
         }
     }
