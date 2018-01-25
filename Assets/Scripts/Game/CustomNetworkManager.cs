@@ -83,12 +83,13 @@ public class CustomNetworkManager : NetworkManager
 
         for (int i = 0; i < players.Length; ++i)
         {
+            players[i].RpcSetColor((byte)spawnPoints[i].colorId);
+            
             PlayerResources resources = Instantiate(resourcesPrefab);
             NetworkServer.Spawn(resources.gameObject);
             players[i].RpcSetResources(resources.gameObject);
             
             spawnPoints[i].castle.RpcSetOwner(players[i].gameObject);
-            players[i].colorId = spawnPoints[i].colorId;
         }
     }
 

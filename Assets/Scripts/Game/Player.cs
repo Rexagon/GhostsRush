@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+[System.Serializable]
 public enum ColorId : byte
 {
     First,
@@ -16,8 +17,7 @@ public class Player : NetworkBehaviour
 
     [HideInInspector]
     public List<GameUnit> units;
-
-    [SyncVar(hook="OnColorChanged")]
+    
     public ColorId colorId;
 
     private InputController inputController;
@@ -89,15 +89,6 @@ public class Player : NetworkBehaviour
         inputController.SetManaAmount(resources.GetMana());
     }
 
-    private void OnColorChanged(ColorId colorId)
-    {
-        foreach (GameUnit unit in units)
-        {
-            unit.SetColor(colorId);
-            Debug.Log("Changed color" + (colorId == ColorId.First).ToString());
-        }
-    }
-
     [Command]
     private void CmdPlaceBuilding(GameObject cellObject, NetworkHash128 buildingId)
     {
@@ -113,6 +104,12 @@ public class Player : NetworkBehaviour
     public void RpcSetResources(GameObject resources)
     {
         this.resources = resources.GetComponent<PlayerResources>();
+    }
+
+    [ClientRpc]
+    public void RpcSetColor(byte colorIdData)
+    {
+        colorId = (ColorId)colorIdData;
     }
 
     [ClientRpc]

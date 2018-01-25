@@ -7,7 +7,8 @@ using UnityEngine.Networking;
 public abstract class GameUnit : NetworkBehaviour
 {
     private Player player;
-    
+
+    [SyncVar]
     public ColorId colorId;
     
     [SyncVar] public int cost;
@@ -48,8 +49,6 @@ public abstract class GameUnit : NetworkBehaviour
     public void RpcSetOwner(GameObject playerObject)
     {
         Player player = playerObject.GetComponent<Player>();
-
-        Debug.Log("ASDASDASDASDASDASD");
 
         if (player == null) return;
 
