@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    public ColorId colorId { get; private set; }
+    public ColorId colorId;
     
     public Castle castle;
-
-    private void Awake()
-    {
-        colorId = castle.colorId;
-    }
 }

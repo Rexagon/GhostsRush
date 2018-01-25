@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public abstract class GameUnit : NetworkBehaviour
 {
     private Player player;
-
+    
     public ColorId colorId;
     
     [SyncVar] public int cost;
@@ -49,7 +49,11 @@ public abstract class GameUnit : NetworkBehaviour
     {
         Player player = playerObject.GetComponent<Player>();
 
+        Debug.Log("ASDASDASDASDASDASD");
+
         if (player == null) return;
+
+        Debug.Log(player.colorId == ColorId.First);
 
         DetachFromPlayer();
         this.player = player;

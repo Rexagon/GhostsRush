@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public abstract class VictoryCondition : MonoBehaviour
+public abstract class VictoryCondition : NetworkBehaviour
 {
     public Player[] players;
 

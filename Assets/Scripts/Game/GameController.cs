@@ -6,21 +6,27 @@ using UnityEngine.Networking;
 [RequireComponent(typeof(NetworkIdentity))]
 public class GameController : NetworkBehaviour
 {
-    private VictoryCondition[] victoryConditions;
-    private bool isGameRunning = false;
+    public bool isRunning { get; private set; }
 
+    public Player[] players { get; set; }
+    private VictoryCondition[] victoryConditions;
+
+    private void Awake()
+    {
+        isRunning = false;
+    }
 
     void Update()
     {
-        if (isServer && isGameRunning && victoryConditions != null)
+        if (isServer && isRunning && victoryConditions != null)
         {
             foreach (VictoryCondition victoryCondition in victoryConditions)
             {
                 if (victoryCondition.GameFinished())
                 {
                     Debug.Log("GAME FINISHED: " + victoryCondition.GetDescription());
-
-                    isGameRunning = false;
+                    
+                    isRunning = false;
                     return;
                 }
             }
@@ -29,7 +35,7 @@ public class GameController : NetworkBehaviour
 
     public void StartGame()
     {
-        victoryConditions = FindObjectsOfType<VictoryCondition>();
+        victoryConditions = GetComponents<VictoryCondition>();
         if (victoryConditions != null)
         {
             Player[] players = FindObjectsOfType<Player>();
@@ -39,5 +45,10 @@ public class GameController : NetworkBehaviour
                 victoryCondition.players = players;
             }
         }
+    }
+
+    public void StopGame()
+    {
+        isRunning = false;
     }
 }

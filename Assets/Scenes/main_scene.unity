@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7403246, g: 0.9481386, b: 1.2990811, a: 1}
+  m_IndirectSpecularColor: {r: 0.74032485, g: 0.94813925, b: 1.2990823, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -80150,6 +80150,7 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
+  gameController: {fileID: 1700133159}
   spawnPoints: []
   resourcesPrefab: {fileID: 114208577279289312, guid: 63f40ba8bb318854ea12c93b3c31a1cf,
     type: 2}
