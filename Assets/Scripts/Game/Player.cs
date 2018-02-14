@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public enum ColorId : byte
@@ -54,12 +55,35 @@ public class Player : NetworkBehaviour
             inputController.SelectBuilding(null);
         }
 
+        // Exit logic
+        if (inputController.ExitButtonPressed())
+        {
+            if (isServer)
+            {
+                Debug.Log("Stop server");
+                NetworkManager.singleton.StopHost();
+                LeaveGame();
+            }
+            else if (isLocalPlayer)
+            {
+                Debug.Log("Stop client");
+                NetworkManager.singleton.StopClient();
+                LeaveGame();
+            }
+        }
+
         UpdateUI();
     }
 
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
+
+        GameObject lobbyCamera = GameObject.FindWithTag("Lobby Camera");
+        if (lobbyCamera != null)
+        {
+            lobbyCamera.GetComponent<Camera>().enabled = false;
+        }
 
         Camera playerCamera = GetComponent<Camera>();
         playerCamera.enabled = true;
@@ -87,6 +111,11 @@ public class Player : NetworkBehaviour
 
         inputController.SetMealAmount(resources.GetMeal());
         inputController.SetManaAmount(resources.GetMana());
+    }
+
+    public void LeaveGame()
+    {
+        SceneManager.LoadScene("main_menu");
     }
 
     [Command]

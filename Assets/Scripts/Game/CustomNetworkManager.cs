@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class CustomNetworkManager : NetworkManager
 {
@@ -33,6 +34,18 @@ public class CustomNetworkManager : NetworkManager
         if (spawnPoints.Length < 2)
         {
             Debug.LogError("There is not enough spawn points!");
+        }
+
+        if (GlobalData.networkType == NetworkType.CLIENT)
+        {
+            networkAddress = GlobalData.connectionAddress;
+            networkPort = GlobalData.connectionPort;
+            StartClient();
+        }
+        else
+        {
+            networkPort = GlobalData.connectionPort;
+            StartHost();
         }
     }
 
@@ -71,7 +84,7 @@ public class CustomNetworkManager : NetworkManager
             Connection connection = connections[currentConnectionIndex];
 
             Transform playerPosition = spawnPoint.transform;
-            Player playerPrefab = (connection.playerInputType == InputType.Default) ? playerPrefabDefault : playerPrefabVR;
+            Player playerPrefab = (connection.playerInputType == InputType.DEFAULT) ? playerPrefabDefault : playerPrefabVR;
 
             Player player = Instantiate(playerPrefab, playerPosition.position, playerPosition.rotation);
 
@@ -93,9 +106,42 @@ public class CustomNetworkManager : NetworkManager
         }
     }
 
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        base.OnServerDisconnect(conn);
+
+        Debug.Log("Server disconnect");
+        
+        StopGame();
+
+        StopHost();
+    }
+
+    public override void OnClientDisconnect(NetworkConnection conn)
+    {
+        base.OnClientDisconnect(conn);
+
+        Debug.Log("Client disconnect");
+
+        StopGame();
+    }
+
     private void StopGame()
     {
         connections = new List<Connection>();
+
+        if (client != null)
+        {
+            GameObject playerGameObject = client.connection.playerControllers[0].gameObject;
+            if (playerGameObject != null)
+            {
+                Player player = playerGameObject.GetComponent<Player>();
+                if (player != null)
+                {
+                    player.LeaveGame();
+                }
+            }
+        }
     }
 
     private void ShuffleConnections()

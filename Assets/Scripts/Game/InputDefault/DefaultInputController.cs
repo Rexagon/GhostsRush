@@ -57,6 +57,11 @@ public class DefaultInputController : InputController
         return Input.GetMouseButtonDown(1);
     }
 
+    public override bool ExitButtonPressed()
+    {
+        return Input.GetKeyDown(KeyCode.Escape);
+    }
+
 
     // UI input
 

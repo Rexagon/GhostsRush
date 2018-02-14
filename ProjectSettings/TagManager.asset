@@ -10,6 +10,7 @@ TagManager:
   - TeleportIgnore
   - Main
   - Spawn Point
+  - Lobby Camera
   layers:
   - Default
   - TransparentFX

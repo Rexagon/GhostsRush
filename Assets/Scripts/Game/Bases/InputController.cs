@@ -17,6 +17,8 @@ public abstract class InputController : MonoBehaviour
 
     public abstract bool RejectButtonPressed();
 
+    public abstract bool ExitButtonPressed();
+
 
     // UI input
 
