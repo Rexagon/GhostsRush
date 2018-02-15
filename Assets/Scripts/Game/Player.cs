@@ -23,9 +23,20 @@ public class Player : NetworkBehaviour
 
     private InputController inputController;
 
+    private bool sessionCompleted = false;
+
     void Start()
     {
         units = new List<GameUnit>();
+    }
+
+    private void OnDestroy()
+    {
+        if (!sessionCompleted)
+        {
+            PlayerPrefs.SetString("last_message", "Disconnected from game");
+            SceneManager.LoadScene("main_menu");
+        }
     }
 
     void Update()
@@ -58,21 +69,15 @@ public class Player : NetworkBehaviour
         // Exit logic
         if (inputController.ExitButtonPressed())
         {
-            if (isServer)
-            {
-                Debug.Log("Stop server");
-                NetworkManager.singleton.StopHost();
-                LeaveGame();
-            }
-            else if (isLocalPlayer)
-            {
-                Debug.Log("Stop client");
-                NetworkManager.singleton.StopClient();
-                LeaveGame();
-            }
+            StopNetworkManager();
         }
 
-        UpdateUI();
+        // Update input controller
+        if (isLocalPlayer && resources != null)
+        {
+            inputController.SetMealAmount(resources.GetMeal());
+            inputController.SetManaAmount(resources.GetMana());
+        }
     }
 
     public override void OnStartLocalPlayer()
@@ -102,20 +107,20 @@ public class Player : NetworkBehaviour
         else
         {
             inputController.MainCamera = playerCamera;
+            inputController.SetLobbyEnabled(false);
         }
     }
-    
-    private void UpdateUI()
-    {
-        if (!isLocalPlayer || resources == null) return;
 
-        inputController.SetMealAmount(resources.GetMeal());
-        inputController.SetManaAmount(resources.GetMana());
-    }
-
-    public void LeaveGame()
+    private void StopNetworkManager()
     {
-        SceneManager.LoadScene("main_menu");
+        if (isServer)
+        {
+            NetworkManager.singleton.StopHost();
+        }
+        else if (isLocalPlayer)
+        {
+            NetworkManager.singleton.StopClient();
+        }
     }
 
     [Command]
@@ -144,12 +149,14 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     public void RpcWonGame(string description)
     {
+        sessionCompleted = true;
         Debug.Log("GAME FINISHED: " + description);
     }
 
     [ClientRpc]
     public void RpcLoseGame(string description)
     {
+        sessionCompleted = true;
         Debug.Log("GAME FINISHED: " + description);
     }
 }

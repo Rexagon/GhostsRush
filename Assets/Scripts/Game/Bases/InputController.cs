@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public abstract class InputController : MonoBehaviour
 {
@@ -8,6 +9,14 @@ public abstract class InputController : MonoBehaviour
 
     protected Building selectedBuilding;
 
+    private void OnDestroy()
+    {
+        NetworkManager.singleton.StopClient();
+        NetworkManager.singleton.StopHost();
+    }
+
+    // Lobby
+    public abstract void SetLobbyEnabled(bool lobbyEnabled);
 
     // General input
 

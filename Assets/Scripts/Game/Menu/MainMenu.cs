@@ -52,6 +52,11 @@ public class MainMenu : MonoBehaviour
 
         exitButton.onClick.AddListener(Exit);
 
+        if (PlayerPrefs.HasKey("network_address"))
+        {
+            ipAddressField.text = PlayerPrefs.GetString("network_address");
+        }
+
         currentMenuState = MenuState.MAIN;
         UpdateMenuState();
     }
@@ -75,7 +80,7 @@ public class MainMenu : MonoBehaviour
 
     private void TryHost()
     {
-        GlobalData.networkType = NetworkType.HOST;
+        PlayerPrefs.SetInt("is_server", 1);
         SceneManager.LoadScene("main_scene");
     }
 
@@ -83,8 +88,8 @@ public class MainMenu : MonoBehaviour
     {
         if (ipAddressField != null)
         {
-            GlobalData.networkType = NetworkType.CLIENT;
-            GlobalData.connectionAddress = ipAddressField.text;
+            PlayerPrefs.SetInt("is_server", 0);
+            PlayerPrefs.SetString("network_address", ipAddressField.text);
             SceneManager.LoadScene("main_scene");
         }
     }

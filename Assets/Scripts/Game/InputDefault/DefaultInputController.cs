@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DefaultInputController : InputController
 {
+    public RectTransform connectionPanel;
+    public RectTransform gamePanel;
+
     public Text mealCounterText;
     public Text manaCounterText;
 
     public BuildingSelectionButton[] buildingSelectionButtons;
+
+    private bool lobbyEnabled = false;
 
     void Awake()
     {
@@ -19,8 +25,47 @@ public class DefaultInputController : InputController
                 selectionButton.inputController = this;
             }
         }
+
+        SetLobbyEnabled(true);
     }
 
+    private void Update()
+    {
+        if (lobbyEnabled && ExitButtonPressed())
+        {
+            PlayerPrefs.SetString("last_message", "You cancelled session creation");
+            SceneManager.LoadScene("main_menu");
+        }
+    }
+
+
+    // Lobby
+    public override void SetLobbyEnabled(bool lobbyEnabled)
+    {
+        this.lobbyEnabled = lobbyEnabled;
+
+        if (connectionPanel != null & gamePanel != null)
+        {
+            if (gamePanel)
+            {
+                Text connectionText = connectionPanel.GetComponentInChildren<Text>();
+                if (connectionText != null)
+                {
+                    if (PlayerPrefs.HasKey("is_server") && PlayerPrefs.GetInt("is_server") == 1)
+                    {
+                        connectionText.text = "Waiting for connections...";
+                    }
+                    else
+                    {
+                        connectionText.text = "Connecting to server...";
+                    }
+                }
+            }
+
+            connectionPanel.gameObject.SetActive(lobbyEnabled);
+            gamePanel.gameObject.SetActive(!lobbyEnabled);
+        }
+    }
 
     // General input
 

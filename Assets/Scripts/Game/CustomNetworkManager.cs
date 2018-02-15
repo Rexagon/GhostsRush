@@ -15,16 +15,20 @@ public class CustomNetworkManager : NetworkManager
     public Player playerPrefabDefault;
     public Player playerPrefabVR;
 
+    private bool gameStarted = false;
+
     private struct Connection
     {
         public NetworkConnection networkConnection;
         public short playerControllerId;
-        public InputType playerInputType;
+        public int playerInputType;
     }
     private List<Connection> connections = new List<Connection>();
 
-    public void Awake()
+    public void Start()
     {
+        dontDestroyOnLoad = false;
+
         if (gameController == null)
         {
             Debug.LogError("There is no Game Controller on scene!");
@@ -36,16 +40,24 @@ public class CustomNetworkManager : NetworkManager
             Debug.LogError("There is not enough spawn points!");
         }
 
-        if (GlobalData.networkType == NetworkType.CLIENT)
+        // Start server or client
+        PlayerPrefs.SetInt("network_port", 7742);
+
+        networkPort = PlayerPrefs.GetInt("network_port");
+
+        if (PlayerPrefs.HasKey("is_server") && PlayerPrefs.GetInt("is_server") == 1)
         {
-            networkAddress = GlobalData.connectionAddress;
-            networkPort = GlobalData.connectionPort;
+            StartHost();
+        }
+        else if (PlayerPrefs.HasKey("network_address"))
+        {
+            networkAddress = PlayerPrefs.GetString("network_address");
             StartClient();
         }
         else
         {
-            networkPort = GlobalData.connectionPort;
-            StartHost();
+            PlayerPrefs.SetString("last_message", "Ip address must be specified");
+            SceneManager.LoadScene("main_menu");
         }
     }
 
@@ -58,51 +70,9 @@ public class CustomNetworkManager : NetworkManager
         connection.playerControllerId = playerControllerId;
         connections.Add(connection);
 
-        if (connections.Count == 2)
+        if (connections.Count == 2 && !gameStarted)
         {
             StartGame();
-        }
-    }
-
-    private void StartGame()
-    {
-        if (connections == null) return;
-
-        if (spawnPoints.Length != 2 || connections.Count != 2)
-        {
-            Debug.LogError("There must be exact 2 spawn points in the scene!");
-            return;
-        }
-
-        ShuffleConnections();
-
-        Player[] players = new Player[connections.Count];
-
-        int currentConnectionIndex = 0;
-        foreach (SpawnPoint spawnPoint in spawnPoints)
-        {
-            Connection connection = connections[currentConnectionIndex];
-
-            Transform playerPosition = spawnPoint.transform;
-            Player playerPrefab = (connection.playerInputType == InputType.DEFAULT) ? playerPrefabDefault : playerPrefabVR;
-
-            Player player = Instantiate(playerPrefab, playerPosition.position, playerPosition.rotation);
-
-            NetworkServer.AddPlayerForConnection(connection.networkConnection, player.gameObject, connection.playerControllerId);
-
-            players[currentConnectionIndex] = player;
-            ++currentConnectionIndex;
-        }
-
-        for (int i = 0; i < players.Length; ++i)
-        {
-            players[i].RpcSetColor((byte)spawnPoints[i].colorId);
-            
-            PlayerResources resources = Instantiate(resourcesPrefab);
-            NetworkServer.Spawn(resources.gameObject);
-            players[i].RpcSetResources(resources.gameObject);
-            
-            spawnPoints[i].castle.RpcSetOwner(players[i].gameObject);
         }
     }
 
@@ -126,22 +96,62 @@ public class CustomNetworkManager : NetworkManager
         StopGame();
     }
 
+    public bool IsHost()
+    {
+        return PlayerPrefs.HasKey("is_server") && PlayerPrefs.GetInt("is_server") == 1;
+    }
+
+    private void StartGame()
+    {
+        if (connections == null) return;
+
+        if (spawnPoints.Length != 2 || connections.Count != 2)
+        {
+            Debug.LogError("There must be exact 2 spawn points in the scene!");
+            return;
+        }
+
+        ShuffleConnections();
+
+        Player[] players = new Player[connections.Count];
+
+        int currentConnectionIndex = 0;
+        foreach (SpawnPoint spawnPoint in spawnPoints)
+        {
+            Connection connection = connections[currentConnectionIndex];
+
+            Transform playerPosition = spawnPoint.transform;
+
+            //TODO: make player prefab selection
+            Player playerPrefab = playerPrefabDefault;
+
+            Player player = Instantiate(playerPrefab, playerPosition.position, playerPosition.rotation);
+
+            NetworkServer.AddPlayerForConnection(connection.networkConnection, player.gameObject, connection.playerControllerId);
+
+            players[currentConnectionIndex] = player;
+            ++currentConnectionIndex;
+        }
+
+        for (int i = 0; i < players.Length; ++i)
+        {
+            players[i].RpcSetColor((byte)spawnPoints[i].colorId);
+
+            PlayerResources resources = Instantiate(resourcesPrefab);
+            NetworkServer.Spawn(resources.gameObject);
+            players[i].RpcSetResources(resources.gameObject);
+
+            spawnPoints[i].castle.RpcSetOwner(players[i].gameObject);
+        }
+
+        gameStarted = true;
+    }
+
     private void StopGame()
     {
         connections = new List<Connection>();
 
-        if (client != null)
-        {
-            GameObject playerGameObject = client.connection.playerControllers[0].gameObject;
-            if (playerGameObject != null)
-            {
-                Player player = playerGameObject.GetComponent<Player>();
-                if (player != null)
-                {
-                    player.LeaveGame();
-                }
-            }
-        }
+        gameStarted = false;
     }
 
     private void ShuffleConnections()

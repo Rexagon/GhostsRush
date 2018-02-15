@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class VRInputController : InputController
 {
+    // Lobby
+    public override void SetLobbyEnabled(bool lobbyEnabled)
+    {
+        throw new System.NotImplementedException();
+    }
+
+
     // General input
 
     public override FieldCell GetSelectedCell()
