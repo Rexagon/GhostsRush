@@ -3,7 +3,7 @@ guid: 2e83113740544d5499d3be65d07a5d5e
 timeCreated: 1514297371
 licenseType: Free
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Camera
     100002: //RootNode
@@ -64,6 +64,38 @@ ModelImporter:
     100112: Bone.005_R.001_end
     100114: Bone.006
     100116: Bone.006_end
+    100118: arm_left
+    100120: arm_right
+    100122: back
+    100124: hand_left
+    100126: hand_right
+    100128: head
+    100130: head_end
+    100132: rag_bottom_back_left
+    100134: rag_bottom_back_left_end
+    100136: rag_bottom_back_right
+    100138: rag_bottom_back_right_end
+    100140: rag_bottom_front_left
+    100142: rag_bottom_front_left_end
+    100144: rag_bottom_front_right
+    100146: rag_bottom_front_right_end
+    100148: rag_middle_back_left
+    100150: rag_middle_back_right
+    100152: rag_middle_front_left
+    100154: rag_middle_front_right
+    100156: rag_root_back
+    100158: rag_root_front
+    100160: rag_top_back
+    100162: rag_top_front
+    100164: root
+    100166: shoulder_left
+    100168: shoulder_right
+    100170: sword
+    100172: weapon_left
+    100174: weapon_left_end
+    100176: weapon_right
+    100178: weapon_right_end
+    100180: shield
     400000: Camera
     400002: //RootNode
     400004: Plane
@@ -123,6 +155,38 @@ ModelImporter:
     400112: Bone.005_R.001_end
     400114: Bone.006
     400116: Bone.006_end
+    400118: arm_left
+    400120: arm_right
+    400122: back
+    400124: hand_left
+    400126: hand_right
+    400128: head
+    400130: head_end
+    400132: rag_bottom_back_left
+    400134: rag_bottom_back_left_end
+    400136: rag_bottom_back_right
+    400138: rag_bottom_back_right_end
+    400140: rag_bottom_front_left
+    400142: rag_bottom_front_left_end
+    400144: rag_bottom_front_right
+    400146: rag_bottom_front_right_end
+    400148: rag_middle_back_left
+    400150: rag_middle_back_right
+    400152: rag_middle_front_left
+    400154: rag_middle_front_right
+    400156: rag_root_back
+    400158: rag_root_front
+    400160: rag_top_back
+    400162: rag_top_front
+    400164: root
+    400166: shoulder_left
+    400168: shoulder_right
+    400170: sword
+    400172: weapon_left
+    400174: weapon_left_end
+    400176: weapon_right
+    400178: weapon_right_end
+    400180: shield
     2000000: Camera
     2300000: Plane_MeshPart0
     2300002: Plane_MeshPart1
@@ -132,6 +196,8 @@ ModelImporter:
     2300010: Plane_polypen
     2300012: //RootNode
     2300014: ghost
+    2300016: sword
+    2300018: shield
     3300000: Plane_MeshPart0
     3300002: Plane_MeshPart1
     3300004: Plane_MeshPart2
@@ -140,6 +206,8 @@ ModelImporter:
     3300010: Plane_polypen
     3300012: //RootNode
     3300014: ghost
+    3300016: sword
+    3300018: shield
     4300000: Plane_polypen
     4300002: Plane_MeshPart0
     4300004: Plane_MeshPart1
@@ -147,11 +215,23 @@ ModelImporter:
     4300008: Plane_MeshPart3
     4300010: Plane_MeshPart4
     4300012: ghost
+    4300014: sword
+    4300016: shield
+    7400000: Armature|walk
     10800000: Sun
+    11100000: //RootNode
+    13700000: ghost
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 6df92286175b2d047bfc2291f13ad57f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -164,11 +244,12 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
-    animationWrapMode: 0
+    animationWrapMode: 2
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
@@ -188,6 +269,8 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
@@ -214,10 +297,10 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 1
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

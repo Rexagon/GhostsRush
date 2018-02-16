@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 4725227432448890}
   - component: {fileID: 114192874203587192}
   - component: {fileID: 114665511721972280}
+  - component: {fileID: 114806823215063114}
   m_Layer: 0
   m_Name: castle
   m_TagString: Untagged
@@ -154,8 +155,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1701846703879742}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1, z: -65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4090243977392720}
@@ -164,7 +165,7 @@ Transform:
   - {fileID: 4297408246207432}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!23 &23079047727534398
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -340,9 +341,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be426ac5a1ea9740b72055060087d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorId: 0
   cost: 10000
   health: 500
-  type: castle
 --- !u!114 &114665511721972280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -375,3 +376,24 @@ MonoBehaviour:
     i15: 76
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114806823215063114
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1701846703879742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
