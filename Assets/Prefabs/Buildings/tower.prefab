@@ -200,9 +200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4fca95a69016a4ba2756e1eb845e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorId: 0
   cost: 50
   health: 40
-  type: tower
 --- !u!198 &198671977577422716
 ParticleSystem:
   m_ObjectHideFlags: 1

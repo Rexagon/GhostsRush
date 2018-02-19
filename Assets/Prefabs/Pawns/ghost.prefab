@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 111907007896814138}
   m_Layer: 8
   m_Name: ghost
-  m_TagString: Untagged
+  m_TagString: Pawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

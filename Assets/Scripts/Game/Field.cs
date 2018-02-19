@@ -4,6 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+#if UNITY_EDITOR
+using UnityEditor;
+
+[CustomEditor(typeof(Field))]
+[CanEditMultipleObjects]
+public class FieldEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        Field field = (Field)target;
+        if (GUILayout.Button("Build Object"))
+        {
+            field.GenerateMesh();
+            field.GenerateCells();
+        }
+    }
+}
+#endif
+
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class Field : MonoBehaviour
 {
@@ -19,17 +40,7 @@ public class Field : MonoBehaviour
     private Mesh mesh;
     private Material material;
 
-    void Reset()
-    {
-        GenerateMesh();
-    }
-
-    void Start()
-    {
-        GenerateCells();
-    }
-
-    private void GenerateMesh()
+    public void GenerateMesh()
     {
         GetComponent<MeshFilter>().mesh = mesh = new Mesh();
         mesh.name = "grid";
@@ -127,7 +138,7 @@ public class Field : MonoBehaviour
         indices = quadIndices;
     }
 
-    private void GenerateCells()
+    public void GenerateCells()
     {
         GameObject[] oldCells = GameObject.FindGameObjectsWithTag("Field Cell");
         foreach (GameObject cell in oldCells)

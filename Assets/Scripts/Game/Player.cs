@@ -43,19 +43,26 @@ public class Player : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
 
-        // Placing buildings logic
-        Building building = inputController.GetSelectedBuilding();
-        if (building != null)
+        // Unit placing logic
+        GameUnit unit = inputController.GetPlaceableUnit();
+        if (unit != null)
         {            
             FieldCell cell;
-            if (building.cost <= resources.GetMeal() &&
+            if (unit.cost <= resources.GetMeal() &&
                 (cell = inputController.GetSelectedCell()) != null)
             {
                 cell.Highlight();
 
                 if (inputController.AcceptButtonPressed())
                 {
-                    CmdPlaceBuilding(cell.gameObject, building.GetComponent<NetworkIdentity>().assetId);
+                    if (unit.tag == "Building")
+                    {
+                        CmdPlaceBuilding(cell.gameObject, unit.GetComponent<NetworkIdentity>().assetId);
+                    }
+                    else if (unit.tag == "Pawn")
+                    {
+                        
+                    }
                 }
             }
         }
@@ -63,7 +70,7 @@ public class Player : NetworkBehaviour
         // Deselecting buildings logic
         if (inputController.RejectButtonPressed())
         {
-            inputController.SelectBuilding(null);
+            inputController.SelectPlaceableUnit(null);
         }
 
         // Exit logic

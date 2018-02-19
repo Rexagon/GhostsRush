@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BuildingSelectionButton : MonoBehaviour
+public class UnitSelectionButton : MonoBehaviour
 {
     public Text costLabel;
-    public Building building;
+    public GameUnit gameUnit;
 
     [HideInInspector]
     public InputController inputController;
@@ -28,9 +28,9 @@ public class BuildingSelectionButton : MonoBehaviour
 
         button.onClick.AddListener(Select);
 
-        if (building != null)
+        if (gameUnit != null)
         {
-            costLabel.text = building.cost.ToString();
+            costLabel.text = gameUnit.cost.ToString();
         }
     }
 
@@ -41,14 +41,14 @@ public class BuildingSelectionButton : MonoBehaviour
             return;
         }
 
-        BuildingSelectionButton[] selectionButtons = FindObjectsOfType<BuildingSelectionButton>();
-        foreach (BuildingSelectionButton selectionButton in selectionButtons)
+        UnitSelectionButton[] selectionButtons = FindObjectsOfType<UnitSelectionButton>();
+        foreach (UnitSelectionButton selectionButton in selectionButtons)
         {
             selectionButton.button.colors = normalColors;
         }
 
         button.colors = selectedColors;
-        inputController.SelectBuilding(building);
+        inputController.SelectPlaceableUnit(gameUnit);
     }
 
     public void Deselect()

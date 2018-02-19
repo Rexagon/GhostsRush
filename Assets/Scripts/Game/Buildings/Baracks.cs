@@ -2,15 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Baracks : Building {
+public class Baracks : Building
+{
+    [System.Serializable]
+    public class Slot
+    {
+        [HideInInspector]
+        public float currentCooldown = 0;
 
-	// Use this for initialization
-	void Start () {
+        public Pawn pawn;
+        public float cooldown;
+
+        public bool IsSpawnable
+        {
+            get
+            {
+                return currentCooldown <= 0;
+            }
+        }
+    };
+
+    public Slot[] slots = new Slot[2];
+    
+	void Start ()
+    {
 		
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	void Update ()
+    {
+		/*foreach (Slot slot in slots)
+        {
+            if (slot.currentCooldown > 0)
+            {
+                slot.currentCooldown = Mathf.Max(slot.currentCooldown - Time.deltaTime, 0);
+            }
+        }*/
 	}
 }

@@ -1,38 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Windmill : Building {
+public class Windmill : Building
+{
     public float cooldown;
     public int mealPerTick;
 
     public ParticleSystem mealParticlesSystem;
 
     private float currentCooldown = 0;
-    
-	void Update ()
+
+    [Server]
+    void Update ()
     {
         if (currentCooldown >= cooldown)
         {
-            OnTick();
+            Player owner = GetOwner();
+
+            if (owner != null)
+            {
+                owner.resources.AddMeal(mealPerTick);
+
+                RpcPlayParticels();
+            }
+
             currentCooldown = Mathf.Repeat(currentCooldown, cooldown);
         }
 
         currentCooldown += Time.deltaTime;
 	}
 
-    private void OnTick()
+    [ClientRpc]
+    public void RpcPlayParticels()
     {
-        Player owner = GetOwner();
-
-        if (owner != null)
+        if (mealParticlesSystem != null)
         {
-            owner.resources.AddMeal(mealPerTick);
-
-            if (mealParticlesSystem != null)
-            {
-                mealParticlesSystem.Play();
-            }
+            mealParticlesSystem.Play();
         }
     }
 }

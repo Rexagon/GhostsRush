@@ -289,9 +289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e8cc35d40cfad45866a7a873002623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorId: 0
   cost: 50
   health: 70
-  type: windmill
   cooldown: 10
   mealPerTick: 25
   mealParticlesSystem: {fileID: 198236506251482368}

@@ -8,17 +8,18 @@ public class DefaultInputController : InputController
 {
     public RectTransform connectionPanel;
     public RectTransform gamePanel;
+    public RectTransform unitsPanel;
 
     public Text mealCounterText;
     public Text manaCounterText;
 
-    public BuildingSelectionButton[] buildingSelectionButtons;
+    public UnitSelectionButton[] unitSelectionButtons;
 
     private bool lobbyEnabled = false;
 
     void Awake()
     {
-        foreach (BuildingSelectionButton selectionButton in buildingSelectionButtons)
+        foreach (UnitSelectionButton selectionButton in unitSelectionButtons)
         {
             if (selectionButton != null)
             {
@@ -120,16 +121,16 @@ public class DefaultInputController : InputController
         manaCounterText.text = amount.ToString();
     }
 
-    public override void SelectBuilding(Building building)
+    public override void SelectPlaceableUnit(GameUnit unit)
     {
-        if (building == null)
+        if (unit == null)
         {
-            foreach (BuildingSelectionButton selectionButton in buildingSelectionButtons)
+            foreach (UnitSelectionButton selectionButton in unitSelectionButtons)
             {
                 selectionButton.Deselect();
             }
         }
 
-        base.SelectBuilding(building);
+        base.SelectPlaceableUnit(unit);
     }
 }

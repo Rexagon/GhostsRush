@@ -7,7 +7,7 @@ public abstract class InputController : MonoBehaviour
 {
     public Camera MainCamera { get; set; }
 
-    protected Building selectedBuilding;
+    protected GameUnit currentPlaceableUnit;
 
     private void OnDestroy()
     {
@@ -35,13 +35,13 @@ public abstract class InputController : MonoBehaviour
 
     public abstract void SetManaAmount(int amount);
 
-    public virtual void SelectBuilding(Building building)
+    public virtual void SelectPlaceableUnit(GameUnit unit)
     {
-        selectedBuilding = building;
+        currentPlaceableUnit = unit;
     }
 
-    public virtual Building GetSelectedBuilding()
+    public virtual GameUnit GetPlaceableUnit()
     {
-        return selectedBuilding;
+        return currentPlaceableUnit;
     }
 }

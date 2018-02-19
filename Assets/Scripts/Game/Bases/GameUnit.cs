@@ -52,8 +52,6 @@ public abstract class GameUnit : NetworkBehaviour
 
         if (player == null) return;
 
-        Debug.Log(player.colorId == ColorId.First);
-
         DetachFromPlayer();
         this.player = player;
         AttachToPlayer();
