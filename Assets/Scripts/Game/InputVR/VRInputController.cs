@@ -13,7 +13,12 @@ public class VRInputController : InputController
 
     // General input
 
-    public override FieldCell GetSelectedCell()
+    public override FieldCell GetHoveredCell()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override GameUnit GetHoveredUnit()
     {
         throw new System.NotImplementedException();
     }
@@ -24,6 +29,11 @@ public class VRInputController : InputController
     }
 
     public override bool RejectButtonPressed()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override bool SelectButtonPressed()
     {
         throw new System.NotImplementedException();
     }

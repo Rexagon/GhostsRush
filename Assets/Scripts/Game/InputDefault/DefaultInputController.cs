@@ -70,7 +70,7 @@ public class DefaultInputController : InputController
 
     // General input
 
-    public override FieldCell GetSelectedCell()
+    public override FieldCell GetHoveredCell()
     {
         if (MainCamera == null ||
             UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
@@ -93,12 +93,40 @@ public class DefaultInputController : InputController
         return null;
     }
 
+    public override GameUnit GetHoveredUnit()
+    {
+        if (MainCamera == null ||
+            UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        {
+            return null;
+        }
+
+        RaycastHit hit;
+        Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, 200.0f, 1 << 8))
+        {
+            GameUnit unit = hit.transform.gameObject.GetComponent<GameUnit>();
+            if (unit)
+            {
+                return unit;
+            }
+        }
+
+        return null;
+    }
+
     public override bool AcceptButtonPressed()
     {
         return Input.GetMouseButtonDown(0);
     }
 
     public override bool RejectButtonPressed()
+    {
+        return Input.GetMouseButtonDown(1);
+    }
+
+    public override bool SelectButtonPressed()
     {
         return Input.GetMouseButtonDown(1);
     }

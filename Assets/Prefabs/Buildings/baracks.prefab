@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 65438110557983910}
   - component: {fileID: 65056502064967684}
   - component: {fileID: 114856009913276930}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: baracks
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -432,9 +432,11 @@ MonoBehaviour:
   cost: 100
   health: 70
   slots:
-  - pawn: {fileID: 114022165842044438, guid: 275b538775e058f42bdb41e2d7767b9f, type: 2}
+  - currentCooldown: 0
+    pawn: {fileID: 114022165842044438, guid: 275b538775e058f42bdb41e2d7767b9f, type: 2}
     cooldown: 10
-  - pawn: {fileID: 0}
+  - currentCooldown: 0
+    pawn: {fileID: 0}
     cooldown: 0
 --- !u!114 &114856009913276930
 MonoBehaviour:

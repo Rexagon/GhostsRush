@@ -1,4 +1,9 @@
-﻿Shader "Custom/GameUnit"
+﻿// Upgrade NOTE: commented out 'float3 _WorldSpaceCameraPos', a built-in variable
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/GameUnit"
 {
     Properties 
 	{
@@ -9,8 +14,12 @@
 		[PerRendererData][Enum(First,0,Second,1)] _ColorId("Color ID", Float) = 0
 
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
-		_Glossiness ("Smoothness", Range(0,1)) = 0.5
-		_Metallic ("Metallic", Range(0,1)) = 0.0
+		_Glossiness("Smoothness", Range(0,1)) = 0.5
+		_Metallic("Metallic", Range(0,1)) = 0.0
+
+		_HighlightColor("Highlight Color", Color) = (0.94, 0.92, 0, 1)
+		_HighlightAlpha("Highlight Transparency", Range(0,1)) = 0.5
+		[Toggle] _Highlighted("Is Highlighted", Float) = 0
 	}
 
 	SubShader 
@@ -36,6 +45,10 @@
 		half _Glossiness;
 		half _Metallic;
 		fixed4 _Color;
+
+		fixed4 _HighlightColor;
+		half _HighlightAlpha;
+		half _Highlighted;
  
 		void surf (Input i, inout SurfaceOutputStandard o) 
 		{
@@ -54,12 +67,15 @@
 				color = tex2D(_MainTex, i.uv_MainTex);
 			}
 
+			if (_Highlighted != 0) {
+				color += _HighlightAlpha * _HighlightColor;
+			}
+
 			o.Albedo = color.rgb;
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
 			o.Alpha = color.a;
 		}
-
 		ENDCG
 	}
 

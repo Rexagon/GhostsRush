@@ -20,7 +20,7 @@ TagManager:
   - UI
   - 
   - 
-  - Pawn
+  - GameUnit
   - Field Cell
   - Terrain
   - Player

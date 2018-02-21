@@ -44,26 +44,36 @@ public class Player : NetworkBehaviour
         if (!isLocalPlayer) return;
 
         // Unit placing logic
-        GameUnit unit = inputController.GetPlaceableUnit();
-        if (unit != null)
+        GameUnit placeableUnit = inputController.GetPlaceableUnit();
+        if (placeableUnit != null)
         {            
             FieldCell cell;
-            if (unit.cost <= resources.GetMeal() &&
-                (cell = inputController.GetSelectedCell()) != null)
+            if (placeableUnit.cost <= resources.GetMeal() &&
+                (cell = inputController.GetHoveredCell()) != null)
             {
                 cell.Highlight();
 
                 if (inputController.AcceptButtonPressed())
                 {
-                    if (unit.tag == "Building")
+                    if (placeableUnit.tag == "Building")
                     {
-                        CmdPlaceBuilding(cell.gameObject, unit.GetComponent<NetworkIdentity>().assetId);
+                        CmdPlaceBuilding(cell.gameObject, placeableUnit.GetComponent<NetworkIdentity>().assetId);
                     }
-                    else if (unit.tag == "Pawn")
+                    else if (placeableUnit.tag == "Pawn")
                     {
                         
                     }
                 }
+            }
+        }
+
+        // Selecting units logic
+        if (inputController.SelectButtonPressed())
+        {
+            GameUnit unit = inputController.GetHoveredUnit();
+            if (unit != null)
+            {
+                inputController.SelectUnit(unit);
             }
         }
 

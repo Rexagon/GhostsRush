@@ -14,9 +14,13 @@ public abstract class GameUnit : NetworkBehaviour
     [SyncVar] public int cost;
     [SyncVar] public int health;
 
+    private MeshRenderer[] highlightedMeshRenderers;
+
     protected virtual void Awake()
     {
         SetColor(colorId);
+
+        highlightedMeshRenderers = GetComponentsInChildren<MeshRenderer>();
     }
 
     public virtual void ApplyDamage(int damage)
@@ -65,6 +69,19 @@ public abstract class GameUnit : NetworkBehaviour
         MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
 
         propertyBlock.SetFloat("_ColorId", color == ColorId.First ? 0 : 1);
+
+        ChangeMaterialColor(transform, propertyBlock);
+        foreach (Transform child in transform)
+        {
+            ChangeMaterialColor(child, propertyBlock);
+        }
+    }
+
+    public virtual void SetHighlighted(bool highlighted)
+    {
+        MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+
+        propertyBlock.SetFloat("_Highlighted", highlighted ? 1 : 0);
 
         ChangeMaterialColor(transform, propertyBlock);
         foreach (Transform child in transform)

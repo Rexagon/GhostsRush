@@ -31,12 +31,12 @@ public class Baracks : Building
 	
 	void Update ()
     {
-		/*foreach (Slot slot in slots)
+		foreach (Slot slot in slots)
         {
             if (slot.currentCooldown > 0)
             {
                 slot.currentCooldown = Mathf.Max(slot.currentCooldown - Time.deltaTime, 0);
             }
-        }*/
+        }
 	}
 }
