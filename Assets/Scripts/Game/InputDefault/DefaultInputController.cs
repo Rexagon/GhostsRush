@@ -155,7 +155,10 @@ public class DefaultInputController : InputController
         {
             foreach (UnitSelectionButton selectionButton in unitSelectionButtons)
             {
-                selectionButton.Deselect();
+                if (selectionButton != null)
+                {
+                    selectionButton.Deselect();
+                }
             }
         }
 
