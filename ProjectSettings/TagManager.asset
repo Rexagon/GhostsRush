@@ -8,9 +8,7 @@ TagManager:
   - Pawn
   - Field Cell
   - TeleportIgnore
-  - Main
-  - Spawn Point
-  - Lobby Camera
+  - InputController
   layers:
   - Default
   - TransparentFX

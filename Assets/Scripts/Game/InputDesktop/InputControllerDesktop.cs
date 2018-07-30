@@ -4,18 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class DefaultInputController : InputController
+public class InputControllerDesktop : InputController
 {
-    public RectTransform connectionPanel;
-    public RectTransform gamePanel;
-    public RectTransform unitsPanel;
+    [Header("Lobby")]
+    public Camera lobbyCamera;
 
+    [Header("Root panels")]
+    public RectTransform lobbyPanel;
+    public RectTransform gamePanel;
+
+    [Header("Additional panels")]
+    public RectTransform pawnsPanel;
+
+    [Header("Counters labels")]
     public Text mealCounterText;
     public Text manaCounterText;
 
+    [Header("Controlls")]
     public UnitSelectionButton[] unitSelectionButtons;
 
     private bool lobbyEnabled = false;
+
 
     void Awake()
     {
@@ -45,11 +54,22 @@ public class DefaultInputController : InputController
     {
         this.lobbyEnabled = lobbyEnabled;
 
-        if (connectionPanel != null & gamePanel != null)
+        if (lobbyCamera != null)
         {
-            if (gamePanel)
+            lobbyCamera.enabled = lobbyEnabled;
+            AudioListener audioListener = lobbyCamera.GetComponent<AudioListener>();
+            if (audioListener)
             {
-                Text connectionText = connectionPanel.GetComponentInChildren<Text>();
+                audioListener.enabled = lobbyEnabled;
+            }
+        }
+
+        // Configure/hide lobby panel
+        if (lobbyPanel)
+        {
+            if (lobbyEnabled)
+            {
+                Text connectionText = lobbyPanel.GetComponentInChildren<Text>();
                 if (connectionText != null)
                 {
                     if (PlayerPrefs.HasKey("is_server") && PlayerPrefs.GetInt("is_server") == 1)
@@ -63,23 +83,27 @@ public class DefaultInputController : InputController
                 }
             }
 
-            connectionPanel.gameObject.SetActive(lobbyEnabled);
+            lobbyPanel.gameObject.SetActive(lobbyEnabled);
+        }
+
+        // Hide/show game panel
+        if (gamePanel != null)
+        {
             gamePanel.gameObject.SetActive(!lobbyEnabled);
         }
     }
 
     // General input
-
     public override FieldCell GetHoveredCell()
     {
-        if (MainCamera == null ||
+        if (mainCamera == null ||
             UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
             return null;
         }
 
         RaycastHit hit;
-        Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, 200.0f, 1 << 9))
         {
@@ -95,14 +119,14 @@ public class DefaultInputController : InputController
 
     public override GameUnit GetHoveredUnit()
     {
-        if (MainCamera == null ||
+        if (mainCamera == null ||
             UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
             return null;
         }
 
         RaycastHit hit;
-        Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, 200.0f, 1 << 8))
         {

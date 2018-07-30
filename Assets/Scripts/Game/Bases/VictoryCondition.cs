@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public abstract class VictoryCondition : NetworkBehaviour
 {
-    public Player[] players;
+    public List<Player> players;
 
     public virtual bool GameFinished()
     {

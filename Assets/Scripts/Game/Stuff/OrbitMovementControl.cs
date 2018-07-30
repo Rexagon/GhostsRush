@@ -2,9 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-[ExecuteInEditMode]
-[RequireComponent(typeof(Camera), typeof(AmplifyOcclusion), typeof(FXAA))]
-public class OrbitCamera : NetworkBehaviour
+public class OrbitMovementControl : NetworkBehaviour
 {
     public Vector3 origin { get; set; }
     public float distance = 30.0f;

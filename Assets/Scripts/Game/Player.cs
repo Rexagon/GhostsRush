@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 [System.Serializable]
-public enum ColorId : byte
+public enum OpponentId : byte
 {
     First,
     Second
@@ -13,30 +12,19 @@ public enum ColorId : byte
 
 public class Player : NetworkBehaviour
 {
-    [HideInInspector]
+    public OpponentId opponentId { get; private set; }
+
     public PlayerResources resources;
-
-    [HideInInspector]
-    public List<GameUnit> units;
     
-    public ColorId colorId;
-
     private InputController inputController;
-
-    private bool sessionCompleted = false;
-
-    void Start()
-    {
-        units = new List<GameUnit>();
-    }
+    
 
     private void OnDestroy()
     {
-        if (!sessionCompleted)
-        {
-            PlayerPrefs.SetString("last_message", "Disconnected from game");
-            SceneManager.LoadScene("main_menu");
-        }
+        if (!isLocalPlayer) return;
+
+        //PlayerPrefs.SetString("last_message", "Disconnected from game");
+        //SceneManager.LoadScene("main_menu");
     }
 
     void Update()
@@ -100,32 +88,20 @@ public class Player : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
+        
+        inputController = GameObject.FindWithTag("InputController").GetComponent<InputController>();
+        if (inputController == null) return;
 
-        GameObject lobbyCamera = GameObject.FindWithTag("Lobby Camera");
-        if (lobbyCamera != null)
-        {
-            lobbyCamera.GetComponent<Camera>().enabled = false;
-        }
+        inputController.SetLobbyEnabled(false);
 
-        Camera playerCamera = GetComponent<Camera>();
+        Camera playerCamera = GetComponentInChildren<Camera>();
         playerCamera.enabled = true;
-
-        GameObject mainObject = GameObject.FindWithTag("Main");
-        if (mainObject == null)
+        AudioListener audioListener = playerCamera.GetComponent<AudioListener>();
+        if (audioListener != null)
         {
-            Debug.LogError("There is no Main object on the scene");
+            audioListener.enabled = true;
         }
-
-        inputController = mainObject.GetComponent<InputController>();
-        if (inputController == null)
-        {
-            Debug.LogError("There is no Input Controller assigned to player");
-        }
-        else
-        {
-            inputController.MainCamera = playerCamera;
-            inputController.SetLobbyEnabled(false);
-        }
+        inputController.mainCamera = playerCamera;
     }
 
     private void StopNetworkManager()
@@ -152,28 +128,14 @@ public class Player : NetworkBehaviour
     }
 
     [ClientRpc]
+    public void RpcSetOpponentId(byte opponentId)
+    {
+        this.opponentId = (OpponentId)opponentId;
+    }
+
+    [ClientRpc]
     public void RpcSetResources(GameObject resources)
     {
         this.resources = resources.GetComponent<PlayerResources>();
-    }
-
-    [ClientRpc]
-    public void RpcSetColor(byte colorIdData)
-    {
-        colorId = (ColorId)colorIdData;
-    }
-
-    [ClientRpc]
-    public void RpcWonGame(string description)
-    {
-        sessionCompleted = true;
-        Debug.Log("GAME FINISHED: " + description);
-    }
-
-    [ClientRpc]
-    public void RpcLoseGame(string description)
-    {
-        sessionCompleted = true;
-        Debug.Log("GAME FINISHED: " + description);
     }
 }

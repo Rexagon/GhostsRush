@@ -82,7 +82,9 @@ public class Field : MonoBehaviour
 
         // Generate outer quad of whole grid to make outer border 
         // the same width of every inner border
-        GenerateQuad(new Vector3(topLeftX - inflate, 0, topLeftY - inflate), new Vector2(cellSize * width, cellSize * height), out quadVertices, out quadIndices);
+        GenerateQuad(new Vector3(topLeftX - inflate, 0, topLeftY - inflate), 
+                     new Vector2(cellSize * width + 2 * inflate, cellSize * height + 2 * inflate), 
+                     out quadVertices, out quadIndices);
 
         quadVertices.CopyTo(vertices, quadNumber * verticesPerQuad);
         for (int t = 0; t < indicesPerQuad; ++t)

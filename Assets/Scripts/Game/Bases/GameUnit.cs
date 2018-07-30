@@ -6,21 +6,19 @@ using UnityEngine.Networking;
 [RequireComponent(typeof(NetworkIdentity))]
 public abstract class GameUnit : NetworkBehaviour
 {
-    private Player player;
+    public OpponentId opponentId;
 
-    [SyncVar]
-    public ColorId colorId;
-    
     [SyncVar] public int cost;
-    [SyncVar] public int health;
+    [SyncVar] public int health;    
 
+    private Player owner;
     private MaterialPropertyBlock materialProperties;
 
     void Awake()
     {
         materialProperties = new MaterialPropertyBlock();
 
-        SetColor(colorId);
+        SetColor(opponentId);
     }
 
     public virtual void ApplyDamage(int damage)
@@ -28,9 +26,7 @@ public abstract class GameUnit : NetworkBehaviour
         health = Mathf.Max(health - damage, 0);
         if (health <= 0)
         {
-            OnDeath();
-
-            DetachFromPlayer();
+            OnDeath();            
             Destroy(this);
         }
     }
@@ -46,27 +42,12 @@ public abstract class GameUnit : NetworkBehaviour
 
     public Player GetOwner()
     {
-        return player;
+        return owner;
     }
 
-    [ClientRpc]
-    public void RpcSetOwner(GameObject playerObject)
+    public virtual void SetColor(OpponentId opponentId)
     {
-        Player player = playerObject.GetComponent<Player>();
-
-        if (player == null) return;
-
-        DetachFromPlayer();
-        this.player = player;
-        AttachToPlayer();
-        SetColor(player.colorId);
-    }
-
-    public virtual void SetColor(ColorId color)
-    {
-        colorId = color;
-
-        materialProperties.SetFloat("_ColorId", color == ColorId.First ? 0 : 1);
+        materialProperties.SetFloat("_ColorId", opponentId == OpponentId.First ? 0 : 1);
 
         ChangeMaterialColor(transform, materialProperties);
         foreach (Transform child in transform)
@@ -95,19 +76,15 @@ public abstract class GameUnit : NetworkBehaviour
         }
     }
 
-    private void AttachToPlayer()
+    [ClientRpc]
+    public void RpcSetOwner(GameObject playerObject)
     {
-        if (player != null)
-        {
-            player.units.Add(this);
-        }
-    }
+        Player player = playerObject.GetComponent<Player>();
 
-    private void DetachFromPlayer()
-    {
-        if (player != null)
-        {
-            player.units.Remove(this);
-        }
+        if (player == null) return;
+
+        owner = player;
+        opponentId = player.opponentId;
+        SetColor(player.opponentId);
     }
 }

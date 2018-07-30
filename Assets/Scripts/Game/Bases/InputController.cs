@@ -1,20 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Networking;
+﻿using UnityEngine;
 
 public abstract class InputController : MonoBehaviour
 {
-    public Camera MainCamera { get; set; }
+    [HideInInspector]
+    public Camera mainCamera;
 
     protected GameUnit currentPlaceableUnit;
     protected GameUnit selectedUnit;
-
-    private void OnDestroy()
-    {
-        NetworkManager.singleton.StopClient();
-        NetworkManager.singleton.StopHost();
-    }
 
     // Lobby
     public abstract void SetLobbyEnabled(bool lobbyEnabled);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    public ColorId colorId;
+    public OpponentId opponentId;
     
     public Castle castle;
 }

@@ -179,6 +179,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 56db6a9d40e86f549891453aac529aa6, type: 2}
   m_StaticBatchInfo:
@@ -213,6 +214,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 44c77d85b1bffc048a8e8daaaee15b3b, type: 2}
   m_StaticBatchInfo:
@@ -247,6 +249,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 4711ec444354e6946b136cfe646cb6af, type: 2}
   m_StaticBatchInfo:
@@ -281,6 +284,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 7625e701224c82b469852895f4468d2e, type: 2}
   m_StaticBatchInfo:
@@ -341,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be426ac5a1ea9740b72055060087d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorId: 0
+  opponentId: 0
   cost: 10000
   health: 500
 --- !u!114 &114665511721972280
