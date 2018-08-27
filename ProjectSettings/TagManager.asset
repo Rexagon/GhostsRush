@@ -3,12 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Building
-  - Pawn
-  - Field Cell
-  - TeleportIgnore
-  - InputController
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -18,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - GameUnit
-  - Field Cell
-  - Terrain
-  - Player
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
